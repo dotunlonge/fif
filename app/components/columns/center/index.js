@@ -68,7 +68,7 @@ const Formula = ({ formula, index, onNameChange }) => {
     </>
 
     const Normal = () => <>
-      <div className="text">{value}</div>
+      <div className="text">{`$${value.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,')}`}</div>
     </>
     
   return (
