@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from "react";
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 const Formula = ({ formula, index, onNameChange }) => {
     const [toggled, setToggled] = useState(false);
@@ -49,7 +50,9 @@ const Formula = ({ formula, index, onNameChange }) => {
             <div className="text">#ERROR</div>
           </div>
           <div className="right">
-            <div className="rounded">Oct 2023</div>
+            <div className="rounded">
+              <DatePicker label={'Month, Year'} views={['month', 'year']} />
+            </div>
           </div>
         </div>
         <div className={toggled ? "inputs open": "inputs"}>
