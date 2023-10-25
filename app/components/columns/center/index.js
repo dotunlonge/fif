@@ -13,7 +13,7 @@ const Formula = ({ formula, index, onNameChange }) => {
     const handleSelection = (selections) => {
       // Extract the values from the selections object and sort them by uniqueKey
       const sortedSelections = Object.keys(selections)
-        .sort((a, b) => a - b) // Sort unique keys numerically
+        //.sort((a, b) => a - b) // Sort unique keys numerically
         .map((uniqueKey) => selections[uniqueKey].value);
     
       if(sortedSelections.length >= 1){
