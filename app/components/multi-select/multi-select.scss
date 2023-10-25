@@ -12,12 +12,13 @@
         justify-content: flex-start;
         align-items: flex-start;
         flex-wrap: wrap; /* Add this line to enable wrapping */
+        padding: 0;
 
         span, input {
 
             padding: 0.5em;
             border-radius: 4px;
-            font-size: 1em;
+            font-size: 0.75em;
             font-weight: 600;
             background: transparent;
             outline: none;
@@ -26,28 +27,60 @@
             min-height: 2em;
             line-height: normal;
             margin: 0;
+            margin-bottom: 0.5em;
+            flex-wrap: wrap;
             
+            .tiny-input{
+              margin: auto;
+              text-align: center;
+              width: 26px;
+              min-width: 25px;
+
+              &:focus {
+                background: transparent;
+                width: auto; // Adjust the width to auto when focused
+                margin-left: 0.5em;
+                text-align: left;
+                min-width: auto;
+                padding: 0 1em;
+                transition: width 0.3s ease; // Add a transition for smooth width change
+              }
+            }
         }
 
         span.box{
-          background: #ddd;
+          background: #f6f8fa;
           margin-right: 0.5em;
+          line-height: 0;
+          padding: 0 0.5em;
+          width: auto;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 1px solid rgb(209, 216, 224);
+          border-radius: 4px;
         }
 
         input{
           min-height: 2em;
-          line-height: 2em;
           font-size: 1em;
           min-width: 80px;
+          padding: 0;
+          align-items: center;
+          justify-content: center;
+          display: flex;
+          line-height: 0;
+          margin: 0;
         }
+
     }
 
-    .options{
-      border: 1px solid #ddd;
-      background-color: white;
-      text-align: start;
-      padding: 0 1em;
-      border-radius: 4px;
+  .options{
+    border: 1px solid #ddd;
+    background-color: white;
+    text-align: start;
+    padding: 0 1em;
+    border-radius: 4px;
   }
       ul{
         li{
@@ -62,12 +95,15 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
+
             .left{
+
               .left-bottom{
                 font-size: 0.75em;
                 color: #7f7f7f;
               }
             }
+
             .right{
 
             }
@@ -76,30 +112,5 @@
       }
     }
   
-
-
-    .selected-options {
-      display: flex;
-      flex-wrap: wrap;
-      margin-top: 10px;
-  
-      .selected-option {
-        background-color: #007bff;
-        color: #fff;
-        border-radius: 4px;
-        padding: 5px 10px;
-        margin: 5px;
-        display: flex;
-        align-items: center;
-  
-        button {
-          background: none;
-          border: none;
-          color: #fff;
-          margin-left: 5px;
-          cursor: pointer;
-        }
-      }
-    }
   }
   

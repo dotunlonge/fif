@@ -6,11 +6,13 @@ import Navbar from './components/navbar';
 import Selector from './components/selector';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
+import { QueryClientProvider, queryClient } from './components/multi-select/api'; // Import the QueryClientProvider
 
 export default function Home() {
   
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <QueryClientProvider client={queryClient}>
     <main className={"main"}>
       <Navbar/>
       <Selector/>
@@ -20,6 +22,7 @@ export default function Home() {
         <Right/>
       </div>
     </main>
+    </QueryClientProvider>
     </LocalizationProvider>
   )
 }

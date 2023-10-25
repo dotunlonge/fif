@@ -2,13 +2,59 @@
 import React, { useState } from "react";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import MultiSelect from "../../multi-select";
+import {useFormulaStore} from '../../../store'; // Import the Zustand store
 
 const Formula = ({ formula, index, onNameChange }) => {
 
     const [toggled, setToggled] = useState(false);
     const [error, setError] = useState(false);
-    const [value, setValue] = useState("0");
+    const [value, setValue] = useState(0);
 
+    const handleSelection = (selections) => {
+      // Extract the values from the selections object and sort them by uniqueKey
+      const sortedSelections = Object.keys(selections)
+        .sort((a, b) => a - b) // Sort unique keys numerically
+        .map((uniqueKey) => selections[uniqueKey].value);
+    
+      if(sortedSelections.length >= 1){
+        // Join the values to create the expression string
+      const expressionString = sortedSelections.join(" ");
+    
+      // Validate the expression before evaluation
+      if (isValidExpression(expressionString)) {
+        try {
+          const sanitizedExpression = sanitizeExpression(expressionString);
+          const result = eval(sanitizedExpression);
+          setValue(result);
+          setError(null); // Clear any previous error
+        } catch (err) {
+          // Handle any potential errors during evaluation
+          setError("Error: Invalid Expression");
+          console.error("Error during evaluation:", err);
+        }
+      } else {
+        // Handle invalid expressions
+        setError("Error: Invalid Expression");
+        console.error("Invalid expression:", expressionString);
+      }
+      
+      }
+      
+    };
+    
+    // Function to validate the expression
+    const isValidExpression = (expression) => {
+      // Regular expression for a valid mathematical expression
+      const validExpressionRegex = /^[\d\s()+\-*^/]+$/;
+      return validExpressionRegex.test(expression);
+    };
+    
+    // Function to sanitize the expression for eval()
+    const sanitizeExpression = (expression) => {
+      // Replace ^ with ** for exponentiation
+      return expression.replace(/\^/g, "**");
+    };
+    
     const Error = () => <>
     <div>
     <svg viewBox="0 0 32 32" className="mr-2 h-6 w-6 fill-current text-red-600">
@@ -18,14 +64,13 @@ const Formula = ({ formula, index, onNameChange }) => {
       ></path>
     </svg>
   </div>
-  <div className="text">#ERROR</div>
-  </>
+  <div className="text">#ERROR - {error}</div>
+    </>
 
-  const Normal = () => <>
+    const Normal = () => <>
       <div className="text">{value}</div>
-  </>
-  
-
+    </>
+    
   return (
     <div className="formula">
         <div className="top">
@@ -72,7 +117,7 @@ const Formula = ({ formula, index, onNameChange }) => {
         <div className={toggled ? "inputs open": "inputs"}>
 
             <div className='input-container'>
-                <MultiSelect/>
+                <MultiSelect process={handleSelection}/>
             </div>
 
             <div className="time-segment">
@@ -87,22 +132,7 @@ const Formula = ({ formula, index, onNameChange }) => {
 };
 
 const Center = () => {
-  const [formulaList, setFormulaList] = useState([{ id: 1, name: "" }]);
-
-  const newFormula = () => {
-    const newId = formulaList.length + 1;
-    setFormulaList((prevFormulaList) => [
-      ...prevFormulaList,
-      { id: newId, name: "" },
-    ]);
-  };
-
-  const handleNameChange = (e, index) => {
-    const updatedFormulaList = [...formulaList];
-    updatedFormulaList[index].name = e.target.value;
-    setFormulaList(updatedFormulaList);
-  };
-
+  const { formulas, addFormula, updateFormulaName } = useFormulaStore(); // Use the store
   return (
     <div className="column center-column">
       <div className="top-section">
@@ -113,17 +143,19 @@ const Center = () => {
           </svg>
           <h3 className="heading">Formulas</h3>
         </div>
-        <button className="plus-button" onClick={newFormula}>
+        <button className="plus-button" onClick={addFormula}>
           <svg viewBox="0 0 16 16">
             <path d="M13 9H9v4H7V9H3V7h4V3h2v4h4v2z"></path>
           </svg>
         </button>
       </div>
+      
       <div className="content">
-        {formulaList.map((formula, i) => (
-          <Formula key={formula.id} formula={formula} index={i} onNameChange={handleNameChange} />
+        {formulas.map((formula, i) => (
+          <Formula key={formula.id} formula={formula} index={i} onNameChange={(e) => updateFormulaName(i, e.target.value)} />
         ))}
       </div>
+
     </div>
   );
 };
