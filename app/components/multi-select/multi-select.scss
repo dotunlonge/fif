@@ -1,0 +1,105 @@
+/* MultiSelect.css */
+.multi-select {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+
+    .content{
+        min-height: 100px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap; /* Add this line to enable wrapping */
+
+        span, input {
+
+            padding: 0.5em;
+            border-radius: 4px;
+            font-size: 1em;
+            font-weight: 600;
+            background: transparent;
+            outline: none;
+            border: 0;
+            color: #373737;
+            min-height: 2em;
+            line-height: normal;
+            margin: 0;
+            
+        }
+
+        span.box{
+          background: #ddd;
+          margin-right: 0.5em;
+        }
+
+        input{
+          min-height: 2em;
+          line-height: 2em;
+          font-size: 1em;
+          min-width: 80px;
+        }
+    }
+
+    .options{
+      border: 1px solid #ddd;
+      background-color: white;
+      text-align: start;
+      padding: 0 1em;
+      border-radius: 4px;
+  }
+      ul{
+        li{
+          list-style-type: none;
+          padding: 0.5em 0;
+          cursor: pointer;
+          font-size: 0.75em;
+          min-width: 250px;
+
+          .option-item{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            .left{
+              .left-bottom{
+                font-size: 0.75em;
+                color: #7f7f7f;
+              }
+            }
+            .right{
+
+            }
+
+          }
+      }
+    }
+  
+
+
+    .selected-options {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 10px;
+  
+      .selected-option {
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 4px;
+        padding: 5px 10px;
+        margin: 5px;
+        display: flex;
+        align-items: center;
+  
+        button {
+          background: none;
+          border: none;
+          color: #fff;
+          margin-left: 5px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+  
