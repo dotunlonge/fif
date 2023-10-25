@@ -1,9 +1,31 @@
 "use client";
 import React, { useState } from "react";
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import MultiSelect from "../../multi-select";
 
 const Formula = ({ formula, index, onNameChange }) => {
+
     const [toggled, setToggled] = useState(false);
+    const [error, setError] = useState(false);
+    const [value, setValue] = useState("0");
+
+    const Error = () => <>
+    <div>
+    <svg viewBox="0 0 32 32" className="mr-2 h-6 w-6 fill-current text-red-600">
+      <path
+        fillRule="evenodd"
+        d="M4 16C4 9.373 9.373 4 16 4s12 5.373 12 12-5.373 12-12 12S4 22.627 4 16zm2 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10S6 21.523 6 16zm11-6v8h-2v-8h2zm0 10v2h-2v-2h2z"
+      ></path>
+    </svg>
+  </div>
+  <div className="text">#ERROR</div>
+  </>
+
+  const Normal = () => <>
+      <div className="text">{value}</div>
+  </>
+  
+
   return (
     <div className="formula">
         <div className="top">
@@ -39,29 +61,23 @@ const Formula = ({ formula, index, onNameChange }) => {
         </div>   
         <div className="bottom">
           <div className="left">
-            <div>
-              <svg viewBox="0 0 32 32" className="mr-2 h-6 w-6 fill-current text-red-600">
-                <path
-                  fillRule="evenodd"
-                  d="M4 16C4 9.373 9.373 4 16 4s12 5.373 12 12-5.373 12-12 12S4 22.627 4 16zm2 0c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10S6 21.523 6 16zm11-6v8h-2v-8h2zm0 10v2h-2v-2h2z"
-                ></path>
-              </svg>
-            </div>
-            <div className="text">#ERROR</div>
+            { error ? <Error/> : <Normal/> }
           </div>
           <div className="right">
             <div className="rounded">
-              <DatePicker label={'Month, Year'} views={['month', 'year']} />
+              <DatePicker views={['month', 'year']} />
             </div>
           </div>
         </div>
         <div className={toggled ? "inputs open": "inputs"}>
-            <div className='input-container'>
 
+            <div className='input-container'>
+                <MultiSelect/>
             </div>
+
             <div className="time-segment">
                 <button className="add">
-                    <svg viewBox="0 0 16 16" class="icon-16 mr-2"><path d="M13 9H9v4H7V9H3V7h4V3h2v4h4v2z"></path></svg>
+                    <svg viewBox="0 0 16 16" className="icon-16 mr-2"><path d="M13 9H9v4H7V9H3V7h4V3h2v4h4v2z"></path></svg>
                     <div>Add Time Segment</div>
                 </button>
             </div>
