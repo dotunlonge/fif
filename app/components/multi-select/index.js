@@ -22,7 +22,7 @@ const MultiSelect = ({ process }) => {
   useEffect(() => {
     const values = Object.values(selected);
     const lastItem = values[values.length - 1];
-    if (typeof lastItem?.value === 'string' && /\d$/.test(lastItem.value)) {
+    if (typeof lastItem?.value === 'string' && (/\d$/.test(lastItem.value) || lastItem.value.endsWith(')'))) {
       process(selected);
     }
   }, [selected]);
